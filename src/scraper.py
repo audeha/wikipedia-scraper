@@ -4,12 +4,14 @@ from bs4 import BeautifulSoup
 
 root_url = "https://country-leaders.onrender.com"
 
+
 def get_cookie():
     """get cookie from api"""
     cookie_url = "/cookie"
     r = requests.get(root_url + cookie_url)
     mycookie = r.cookies
     return mycookie
+
 
 def refresh_cookie(cookie):
     """returns a new cookie if the cookie has expired"""
@@ -27,6 +29,7 @@ def refresh_cookie(cookie):
         print("There's an error with your cookie.")
     return cookie
 
+
 def get_country(cookie):
     """returns a list of the supported countries from the API"""
     get_country = "/countries"
@@ -39,13 +42,16 @@ def get_country(cookie):
         return None
     return output
 
+
 def get_leaders(cookie, countries):
     """Populates the `leader_data` dict with the leaders of each country retrieved from the API"""
     get_leaders = "/leaders"
     leader_data = {}
 
     for country in countries:
-        leaders = requests.get(root_url + get_leaders + "?country=" + country, cookies=cookie)
+        leaders = requests.get(
+            root_url + get_leaders + "?country=" + country, cookies=cookie
+        )
         try:
             # Assuming the API returns JSON data
             leader_data[country] = leaders.json()
@@ -55,20 +61,22 @@ def get_leaders(cookie, countries):
 
     return leader_data
 
+
 def get_first_paragraph(wikipedia_url):
     """returns the first paragraph from the wikipedia url"""
     response = requests.get(wikipedia_url)
-    soup = BeautifulSoup(response.content, 'html.parser')
+    soup = BeautifulSoup(response.content, "html.parser")
     # Find all paragraphs
-    paragraphs = soup.find_all('p')
+    paragraphs = soup.find_all("p")
     for paragraph in paragraphs:
         # Check if the paragraph starts with a <b> tag
-        if paragraph.find('b'):
+        if paragraph.find("b"):
             return paragraph.text
 
-    return 'No paragraph with bold text found'
+    return "No paragraph with bold text found"
+
 
 def to_json_file(data, filepath: str):
     """stores the data structure into a JSON file"""
-    with open(filepath, 'a') as ofile:
-        ofile = json.dumps(data, indent=4, sort_keys=True)
+    with open(filepath, "w") as ofile:
+        json.dumps(data, ofile, indent=4, sort_keys=True)
