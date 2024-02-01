@@ -1,4 +1,6 @@
 import requests
+import json
+from bs4 import BeautifulSoup
 
 root_url = "https://country-leaders.onrender.com"
 
@@ -16,16 +18,21 @@ def refresh_cookie(cookie):
     infotext = infoc.status_code
     if infotext == 403:
         print("The cookie is missing or has expired")
+        print("CReating new cookie...")
+        return get_cookie()
+        print("Your cookie has been created")
     elif infotext == 200:
         print("Your cookie is valid")
     else:
         print("There's an error with your cookie.")
+    return cookie
 
 def get_country(cookie):
+    """returns a list of the supported countries from the API"""
     get_country = "/countries"
     country = requests.get(root_url + get_country, cookies=cookie)
     try:
-        output= country.json()
+        output = country.json()
     except json.JSONDecodeError:
         # If an error occurs, print the error and return None
         print("Failed to parse JSON")
@@ -33,30 +40,35 @@ def get_country(cookie):
     return output
 
 def get_leaders(cookie, countries):
+    """Populates the `leader_data` dict with the leaders of each country retrieved from the API"""
     get_leaders = "/leaders"
-    #initializing the list
-    all_leaders = []
+    leader_data = {}
 
     for country in countries:
         leaders = requests.get(root_url + get_leaders + "?country=" + country, cookies=cookie)
-        #we append the response to all_leaders for each country
-        all_leaders.append(leaders.text)
-    return all_leaders
+        try:
+            # Assuming the API returns JSON data
+            leader_data[country] = leaders.json()
+        except json.JSONDecodeError:
+            print(f"Failed to parse JSON for country: {country}")
+            leader_data[country] = []
 
-def get_leader_info(cookie, leader_id):
-    mydata = json.loads(all_leaders_json)
-    all_ids = []
+    return leader_data
 
-    for inner_list in mydata:
-        for obj in inner_list:
-            all_ids.append(obj['id'])
-            return all_ids
+def get_first_paragraph(wikipedia_url):
+    """returns the first paragraph from the wikipedia url"""
+    response = requests.get(wikipedia_url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    # Find all paragraphs
+    paragraphs = soup.find_all('p')
+    for paragraph in paragraphs:
+        # Check if the paragraph starts with a <b> tag
+        if paragraph.find('b'):
+            return paragraph.text
 
-    get_leader_details = "/leader"
-    all_leader_info = []
+    return 'No paragraph with bold text found'
 
-    for id in all_ids:
-        payload = {"leader_id":id}
-        r = requests.get(root_url + get_leader_details, params=payload, cookies=cookie)
-        leader_info = r.json()
-        all_leader_info.append(leader_info)
+def to_json_file(data, filepath: str):
+    """stores the data structure into a JSON file"""
+    with open(filepath, 'a') as ofile:
+        ofile = json.dumps(data, indent=4, sort_keys=True)
