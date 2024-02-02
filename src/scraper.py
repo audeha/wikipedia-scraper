@@ -4,24 +4,25 @@ from bs4 import BeautifulSoup
 
 root_url = "https://country-leaders.onrender.com"
 
+# Create a session object
+session = requests.Session()
 
 def get_cookie():
-    """get cookie from api"""
+    """Get cookie using the session"""
     cookie_url = "/cookie"
-    r = requests.get(root_url + cookie_url)
-    mycookie = r.cookies
-    return mycookie
-
+    r = session.get(root_url + cookie_url)
+    return r.cookies
 
 def refresh_cookie(cookie):
     """returns a new cookie if the cookie has expired"""
     cookie_info = "/check"
-    infoc = requests.get(root_url + cookie_info, cookies=cookie)
+    infoc = session.get(root_url + cookie_info)
     infotext = infoc.status_code
     if infotext == 403:
         print("The cookie is missing or has expired")
         print("CReating new cookie...")
-        return get_cookie()
+        #no need to return the cookie like in other version
+        get_cookie()
         print("Your cookie has been created")
     elif infotext == 200:
         print("Your cookie is valid")

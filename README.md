@@ -1,6 +1,6 @@
 # Wikipedia Scraper
 
-Welcome to the Wikipedia Scraper!
+Welcome to the Wikipedia Scraper, the MUST_HAVE version!
  <pre>
         __________      ________________ _______ ______ ________________
 |\     /\__   __| \    /\__   __(  ____ (  ____ (  __  \\__   __(  ___  )
@@ -25,6 +25,8 @@ Welcome to the Wikipedia Scraper!
 This programs calls an API that gives a list of countries and a list of leaders for each country. </p>
 Each leader is represented by an ID linked to a Wikipedia url.</p>
 The programs reads the first paragraph of each leader and writes the output in a json file.
+
+This version differs from the normal because it use a requests session to manage the cookie, instead or using functions to call and refresh the cookie.
 
 ## Installation
 `git clone git@github.com:audeha/wikipedia-scraper.git`  </p>
