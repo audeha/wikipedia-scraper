@@ -1,6 +1,6 @@
 # Wikipedia Scraper
 
-Welcome to the Wikipedia Scraper, the MUST_HAVE version!
+Welcome to the Wikipedia Scraper, the NICE_TO_HAVE version!
  <pre>
         __________      ________________ _______ ______ ________________
 |\     /\__   __| \    /\__   __(  ____ (  ____ (  __  \\__   __(  ___  )
