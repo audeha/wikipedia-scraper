@@ -35,3 +35,4 @@ The programs reads the first programs of each leader and writes the output in a 
 The results are in "leaders_data.json" --> ``more leaders_data.json``</p>
 
 ## Visuals
+![Alt Text](./Screenshot1.png)

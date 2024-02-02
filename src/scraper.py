@@ -78,5 +78,5 @@ def get_first_paragraph(wikipedia_url):
 
 def to_json_file(data, filepath: str):
     """stores the data structure into a JSON file"""
-    with open(filepath, "w") as ofile:
-        json.dumps(data, ofile, indent=4, sort_keys=True)
+    with open(filepath, "w", encoding="utf-8") as ofile:
+        json.dump(data, ofile, indent=4, sort_keys=True)
