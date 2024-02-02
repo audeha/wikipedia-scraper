@@ -4,3 +4,4 @@ wikipedia_scraper.ipynb
 __pycache__
 cookie.py
 cookie2.py
+.gitignore

@@ -22,17 +22,18 @@ Welcome to the Wikipedia Scraper!
   ascii from http://www.patorjk.com/software/taag/
 
 ## Description
-This programs calls an API that gives a list of counties and a list of leaders for each country. </p>
+This programs calls an API that gives a list of countries and a list of leaders for each country. </p>
 Each leader is represented by an ID linked to a Wikipedia url.</p>
-The programs reads the first programs of each leader and writes the output in a json file.
+The programs reads the first paragraph of each leader and writes the output in a json file.
 
 ## Installation
 `git clone git@github.com:audeha/wikipedia-scraper.git`  </p>
 `cd wikipedia-scraper`
 
 ## Usage
+`pip install -r requirements.txt` </p>
 `python3 main.py` </p>
-The results are in "leaders_data.json" --> ``more leaders_data.json``</p>
+The results are in "leaders_data.json" --> open with your browser</p>
 
 ## Visuals
 ![Alt Text](./Screenshot1.png)
