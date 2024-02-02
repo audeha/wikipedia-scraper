@@ -37,8 +37,11 @@ first_paragraphs = {}
 for leader_info in all_leader_info:
     myurl = leader_info['wikipedia_url']
     first_paragraph = get_first_paragraph(myurl)
-    first_paragraphs[leader_info['id']] = first_paragraph
-
+    # Storing both leader_info and first_paragraph
+    first_paragraphs[leader_info['id']] = {
+        'leader_info': leader_info,
+        'first_paragraph': first_paragraph
+    }
 # Writing all first paragraphs to the file
 details_file_path = "leaders_data.json"
 to_json_file(first_paragraphs, details_file_path)

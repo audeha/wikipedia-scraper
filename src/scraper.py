@@ -44,7 +44,8 @@ def get_country(cookie):
 
 
 def get_leaders(cookie, countries):
-    """Populates the `leader_data` dict with the leaders of each country retrieved from the API"""
+    """Populates the `leader_data` dict with the leaders of each country
+    retrieved from the API"""
     get_leaders = "/leaders"
     leader_data = {}
 
@@ -53,7 +54,6 @@ def get_leaders(cookie, countries):
             root_url + get_leaders + "?country=" + country, cookies=cookie
         )
         try:
-            # Assuming the API returns JSON data
             leader_data[country] = leaders.json()
         except json.JSONDecodeError:
             print(f"Failed to parse JSON for country: {country}")
@@ -72,7 +72,6 @@ def get_first_paragraph(wikipedia_url):
         # Check if the paragraph starts with a <b> tag
         if paragraph.find("b"):
             return paragraph.text
-
     return "No paragraph with bold text found"
 
 
